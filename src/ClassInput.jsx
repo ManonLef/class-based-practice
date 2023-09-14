@@ -30,12 +30,23 @@ class ClassInput extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
+    this.editTask = this.editTask.bind(this);
   }
 
   handleEdit(key) {
+    event.preventDefault();
     const taskIndex = this.state.todos.findIndex((x) => x.id === key);
     const newTodos = [...this.state.todos];
     newTodos[taskIndex].editing = !newTodos[taskIndex].editing;
+    this.setState(() => ({
+      todos: newTodos,
+    }));
+  }
+
+  editTask(key, e) {
+    const taskIndex = this.state.todos.findIndex((x) => x.id === key);
+    const newTodos = [...this.state.todos];
+    newTodos[taskIndex].name = e.target.value;
     this.setState(() => ({
       todos: newTodos,
     }));
@@ -62,7 +73,6 @@ class ClassInput extends Component {
 
   handleRemove(key) {
     const newTodos = this.state.todos.filter((todo) => todo.id !== key);
-    console.log(newTodos);
     this.setState(() => ({
       todos: newTodos,
     }));
@@ -88,16 +98,20 @@ class ClassInput extends Component {
           {this.state.todos.map((todo) =>
             todo.editing ? (
               <li key={todo.id}>
-                <input
-                  type="text"
-                  name="task-entry"
-                  value={todo.name}
-                  onChange={() => this.editTask(todo.id)}
-                />
-                <button onClick={() => this.handleEdit(todo.id)}>edit</button>
-                <button onClick={() => this.handleRemove(todo.id)}>
-                  delete
-                </button>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    this.handleEdit(todo.id);
+                  }}>
+                  <label htmlFor="task-edit"></label>
+                  <input
+                    type="text"
+                    name="task-edit"
+                    value={todo.name}
+                    onChange={(e) => this.editTask(todo.id, e)}
+                  />
+                  <button onClick={() => this.handleEdit(todo.id)}>edit</button>
+                </form>
               </li>
             ) : (
               <li key={todo.id}>
