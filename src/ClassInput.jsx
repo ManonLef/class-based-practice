@@ -18,10 +18,10 @@ class ClassInput extends Component {
 
     this.state = {
       todos: [
-        { name: "test 1", id: crypto.randomUUID() },
-        { name: "test 2", id: crypto.randomUUID() },
-        { name: "test 3", id: crypto.randomUUID() },
-        { name: "test 4", id: crypto.randomUUID() },
+        { name: "test 1", id: crypto.randomUUID(), editing: false },
+        { name: "test 2", id: crypto.randomUUID(), editing: false },
+        { name: "test 3", id: crypto.randomUUID(), editing: false },
+        { name: "test 4", id: crypto.randomUUID(), editing: false },
       ],
       inputVal: "",
     };
@@ -44,6 +44,7 @@ class ClassInput extends Component {
       todos: state.todos.concat({
         name: state.inputVal,
         id: crypto.randomUUID(),
+        editing: false,
       }),
       inputVal: "",
     }));
