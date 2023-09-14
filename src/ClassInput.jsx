@@ -19,7 +19,7 @@ class ClassInput extends Component {
       inputVal: e.target.value,
     }));
   }
-  
+
   handleSubmit(e) {
     e.preventDefault();
     this.setState((state) => ({
@@ -32,13 +32,22 @@ class ClassInput extends Component {
     return (
       <section>
         <h3>{this.props.name}</h3>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <label htmlFor="task-entry">Enter a task: </label>
-          <input type="text" name="task-entry" />
+          <input
+            type="text"
+            name="task-entry"
+            value={this.state.inputVal}
+            onChange={this.handleInputChange}
+          />
           <button type="submit">Submit</button>
         </form>
         <h4>All the tasks!</h4>
-        <ul></ul>
+        <ul>
+          {this.state.todos.map((todo) => (
+            <li key={todo}>{todo}</li>
+          ))}
+        </ul>
       </section>
     );
   }
