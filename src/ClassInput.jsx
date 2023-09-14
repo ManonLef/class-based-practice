@@ -1,5 +1,17 @@
 import { Component } from "react";
 
+class Counter extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { count: props.amount };
+  }
+
+  render() {
+    return <div>counter: {this.state.count}</div>;
+  }
+}
+
 class ClassInput extends Component {
   constructor(props) {
     super(props);
@@ -51,6 +63,7 @@ class ClassInput extends Component {
           <button type="submit">Submit</button>
         </form>
         <h4>All the tasks!</h4>
+        <Counter key={this.state.todos} amount={this.state.todos.length} />
         <ul>
           {this.state.todos.map((todo) => (
             <li key={todo}>

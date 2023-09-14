@@ -1,11 +1,7 @@
 import ClassInput from "./ClassInput";
 
 function App() {
-  return (
-    <div>
-      <ClassInput name="Class Input" />
-    </div>
-  );
+  return <ClassInput name="Class Input" />;
 }
 
 export default App;
