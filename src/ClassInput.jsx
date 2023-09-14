@@ -5,12 +5,13 @@ class ClassInput extends Component {
     super(props);
 
     this.state = {
-      todos: [],
+      todos: ["test 1", "test 2", "test 3", "test 4"],
       inputVal: "",
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
   }
 
   handleInputChange(e) {
@@ -25,6 +26,13 @@ class ClassInput extends Component {
     this.setState((state) => ({
       todos: state.todos.concat(state.inputVal),
       inputVal: "",
+    }));
+  }
+
+  handleRemove(key) {
+    const newTodos = this.state.todos.filter((todo) => todo !== key);
+    this.setState(() => ({
+      todos: newTodos,
     }));
   }
 
@@ -45,7 +53,10 @@ class ClassInput extends Component {
         <h4>All the tasks!</h4>
         <ul>
           {this.state.todos.map((todo) => (
-            <li key={todo}>{todo}</li>
+            <li key={todo}>
+              {todo}{" "}
+              <button onClick={() => this.handleRemove(todo)}>delete</button>
+            </li>
           ))}
         </ul>
       </section>
