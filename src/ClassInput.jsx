@@ -34,11 +34,11 @@ class ClassInput extends Component {
 
   handleEdit(key) {
     const taskIndex = this.state.todos.findIndex((x) => x.id === key);
-    const newTodos = [...this.state.todos]
-    newTodos[taskIndex].editing = true
+    const newTodos = [...this.state.todos];
+    newTodos[taskIndex].editing = !newTodos[taskIndex].editing;
     this.setState(() => ({
       todos: newTodos,
-    }))
+    }));
   }
 
   handleInputChange(e) {
@@ -92,8 +92,9 @@ class ClassInput extends Component {
                   type="text"
                   name="task-entry"
                   value={todo.name}
-                  onChange={() => this.handleEdit(todo.id)}
+                  onChange={() => this.editTask(todo.id)}
                 />
+                <button onClick={() => this.handleEdit(todo.id)}>edit</button>
                 <button onClick={() => this.handleRemove(todo.id)}>
                   delete
                 </button>
