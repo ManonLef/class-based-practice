@@ -19,7 +19,7 @@ class ClassInput extends Component {
     this.state = {
       todos: [
         { name: "test 1", id: crypto.randomUUID(), editing: false },
-        { name: "test 2", id: crypto.randomUUID(), editing: false },
+        { name: "test 2", id: crypto.randomUUID(), editing: true },
         { name: "test 3", id: crypto.randomUUID(), editing: false },
         { name: "test 4", id: crypto.randomUUID(), editing: false },
       ],
@@ -29,6 +29,12 @@ class ClassInput extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+  }
+
+  handleEdit(key) {
+    console.log(key)
+    // functionality here
   }
 
   handleInputChange(e) {
@@ -75,12 +81,28 @@ class ClassInput extends Component {
         <h4>All the tasks!</h4>
         <Counter key={this.state.todos} amount={this.state.todos.length} />
         <ul>
-          {this.state.todos.map((todo) => (
-            <li key={todo.id}>
-              {todo.name}{" "}
-              <button onClick={() => this.handleRemove(todo.id)}>delete</button>
-            </li>
-          ))}
+          {this.state.todos.map((todo) =>
+            todo.editing ? (
+              <li key={todo.id}>
+                <input
+                  type="text"
+                  name="task-entry"
+                  value={todo.name}
+                  onChange={() => this.handleEdit(todo.id)}
+                />
+                <button onClick={() => this.handleRemove(todo.id)}>
+                  delete
+                </button>
+              </li>
+            ) : (
+              <li key={todo.id}>
+                {todo.name}{" "}
+                <button onClick={() => this.handleRemove(todo.id)}>
+                  delete
+                </button>
+              </li>
+            )
+          )}
         </ul>
       </section>
     );
