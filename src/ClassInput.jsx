@@ -17,7 +17,12 @@ class ClassInput extends Component {
     super(props);
 
     this.state = {
-      todos: ["test 1", "test 2", "test 3", "test 4"],
+      todos: [
+        { name: "test 1", id: crypto.randomUUID() },
+        { name: "test 2", id: crypto.randomUUID() },
+        { name: "test 3", id: crypto.randomUUID() },
+        { name: "test 4", id: crypto.randomUUID() },
+      ],
       inputVal: "",
     };
 
@@ -36,13 +41,17 @@ class ClassInput extends Component {
   handleSubmit(e) {
     e.preventDefault();
     this.setState((state) => ({
-      todos: state.todos.concat(state.inputVal),
+      todos: state.todos.concat({
+        name: state.inputVal,
+        id: crypto.randomUUID(),
+      }),
       inputVal: "",
     }));
   }
 
   handleRemove(key) {
-    const newTodos = this.state.todos.filter((todo) => todo !== key);
+    const newTodos = this.state.todos.filter((todo) => todo.id !== key);
+    console.log(newTodos);
     this.setState(() => ({
       todos: newTodos,
     }));
@@ -66,9 +75,9 @@ class ClassInput extends Component {
         <Counter key={this.state.todos} amount={this.state.todos.length} />
         <ul>
           {this.state.todos.map((todo) => (
-            <li key={todo}>
-              {todo}{" "}
-              <button onClick={() => this.handleRemove(todo)}>delete</button>
+            <li key={todo.id}>
+              {todo.name}{" "}
+              <button onClick={() => this.handleRemove(todo.id)}>delete</button>
             </li>
           ))}
         </ul>
