@@ -6,8 +6,26 @@ class ClassInput extends Component {
 
     this.state = {
       todos: [],
-      inputVal: ""
-    }
+      inputVal: "",
+    };
+
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleInputChange(e) {
+    this.setState((state) => ({
+      ...state,
+      inputVal: e.target.value,
+    }));
+  }
+  
+  handleSubmit(e) {
+    e.preventDefault();
+    this.setState((state) => ({
+      todos: state.todos.concat(state.inputVal),
+      inputVal: "",
+    }));
   }
 
   render() {
